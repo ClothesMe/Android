@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ClothesMe-Android</string>
+    <string name="app_intro">Intro</string>
 </resources>

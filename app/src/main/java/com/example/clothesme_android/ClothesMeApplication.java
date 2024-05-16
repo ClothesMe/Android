@@ -74,6 +74,9 @@ public class ClothesMeApplication extends AppCompatActivity {
             int position = viewPager2.getCurrentItem();
             executeFunction(position); // 해당 이미지에 대한 기능을 실행하는 메서드 호출
         });
+
+        // 하단 흰색 버튼 클릭 이벤트
+        findViewById(R.id.white_btn).setOnClickListener(v -> replayIntroduction());
     }
 
     private final Runnable sliderRunnable = new Runnable() {
@@ -111,7 +114,7 @@ public class ClothesMeApplication extends AppCompatActivity {
             default:
                 description = "하단의 흰색 버튼을 누르면,  클로즈미 어플 사용 방법이 음성으로 안내됩니다.";
         }
-        textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, null);
+        textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "ImageDescription");
     }
 
     // 해당 이미지에 대한 기능을 실행하는 메서드
@@ -125,5 +128,13 @@ public class ClothesMeApplication extends AppCompatActivity {
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
+    }
+
+    // 설명 다시 듣기 (하단 흰 버튼)
+    private void replayIntroduction() {
+        String description = "클로즈미 어플 사용 방법을 안내해드리겠습니다."+ "화면 중앙에 있는 초록 버튼을 양 옆으로 슬라이드하면, 해당 기능에 대한 설명이 음성으로 안내됩니다." +
+                "초록 버튼을 한번 누르면, 기능에 대한 설명이 음성으로 한번 더 안내되며, 두번 연속으로 누르면, 해당 기능이 실행됩니다. " +
+                "어플 사용 방법을 다시 듣고싶으시다면, 하단의 흰색 버튼을 눌러주세요.";
+        textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "replayIntroduction");
     }
 }

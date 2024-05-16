@@ -21,8 +21,8 @@ public class IntroActivity extends AppCompatActivity {
             if (status != TextToSpeech.ERROR) {
                 textToSpeech.setLanguage(Locale.KOREAN); // 언어 설정 (한국어)
                 // 설명을 음성으로 출력
-                String description = "클로즈미 어플이 실행되었습니다." + "화면 중앙에 있는, 초록 버튼을 양 옆으로 슬라이드하면, 해당 기능에 대한 설명이, 음성으로 안내됩니다. " +
-                        "초록 버튼을 한번 누르면, 기능에 대한 설명이, 음성으로 한번 더 안내되며, 두번 연속으로 누르면, 해당 기능이 실행됩니다. " +
+                String description = "클로즈미 어플이 실행되었습니다." + "화면 중앙에 있는 초록 버튼을 양 옆으로 슬라이드하면, 해당 기능에 대한 설명이 음성으로 안내됩니다." +
+                        "초록 버튼을 한번 누르면, 기능에 대한 설명이 음성으로 한번 더 안내되며, 두번 연속으로 누르면, 해당 기능이 실행됩니다. " +
                         "어플 사용 방법을 다시 듣고싶으시다면, 하단의 흰색 버튼을 눌러주세요.";
                 textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "intro");
             }

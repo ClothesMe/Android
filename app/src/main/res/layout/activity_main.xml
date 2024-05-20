@@ -54,6 +54,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/white_btn" />
 
+    <ImageView
+        android:id="@+id/image_retelling"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/app_main"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintBottom_toBottomOf="@+id/white_btn"
+        app:layout_constraintEnd_toEndOf="@+id/white_btn"
+        app:layout_constraintStart_toStartOf="@+id/white_btn"
+        app:layout_constraintTop_toTopOf="@+id/white_btn"
+        app:srcCompat="@drawable/retelling" />
+
+    <TextView
+        android:id="@+id/text_retelling"
+        android:layout_width="145dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/text_howToUse"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/white_btn"
+        app:layout_constraintEnd_toEndOf="@+id/white_btn"
+        app:layout_constraintStart_toStartOf="@+id/white_btn"
+        app:layout_constraintTop_toTopOf="@+id/white_btn" />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/image_slider"
         android:layout_width="match_parent"

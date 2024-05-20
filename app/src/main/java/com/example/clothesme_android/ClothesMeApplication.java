@@ -31,8 +31,8 @@ public class ClothesMeApplication extends AppCompatActivity {
 
         List<SliderItems> sliderItems = new ArrayList<>();
         sliderItems.add(new SliderItems(R.drawable.function1)); //옷 분석 기능
-        sliderItems.add(new SliderItems(R.drawable.function1)); //양말 짝 판별 기능
-        sliderItems.add(new SliderItems(R.drawable.function1)); //날씨에 맞는 옷 추천 기능
+        sliderItems.add(new SliderItems(R.drawable.function2)); //양말 짝 판별 기능
+        sliderItems.add(new SliderItems(R.drawable.function3)); //날씨에 맞는 옷 추천 기능
 
         viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2, this));
 

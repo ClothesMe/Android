@@ -2,5 +2,6 @@
     <string name="app_name">ClothesMe-Android</string>
     <string name="app_intro">Intro</string>
     <string name="app_main">Main</string>
+    <string name="app_function">Function</string>
     <string name="text_howToUse">클로즈미 사용법 안내</string>
 </resources>

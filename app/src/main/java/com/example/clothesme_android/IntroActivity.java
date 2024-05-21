@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +27,20 @@ public class IntroActivity extends AppCompatActivity {
                         "어플 사용 방법을 다시 듣고싶으시다면, 하단의 흰색 버튼을 눌러주세요.";
                 textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "intro");
             }
+        });
+
+        // skip
+        ImageButton btnSkip = findViewById(R.id.white_btn);
+        btnSkip.setOnClickListener(v -> {
+            // TTS 객체가 null이 아니면 종료
+            if (textToSpeech != null) {
+                textToSpeech.stop();
+            }
+
+            // 메인 액티비티로 이동
+            Intent intent = new Intent(getApplicationContext(), ClothesMeApplication.class);
+            startActivity(intent);
+            finish(); // 인트로 액티비티 종료
         });
 
         // TTS 재생이 끝나면 인트로 액티비티를 종료

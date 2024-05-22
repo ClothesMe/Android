@@ -2,7 +2,10 @@ package com.example.clothesme_android;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,6 +36,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
                 ));
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setImage(sliderItems.get(position));
@@ -43,6 +47,17 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             // 해당 이미지에 대한 설명을 음성으로 들려주는 메서드 호출
             ((ClothesMeApplication)context).speakImageDescription(position);
         });
+
+        GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                // 더블 클릭 시 카메라 액티비티 실행
+                Intent intent = new Intent(context, CameraActivity.class);
+                context.startActivity(intent);
+                return super.onDoubleTap(e);
+            }
+        });
+        holder.imageView.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
     }
 
     @Override

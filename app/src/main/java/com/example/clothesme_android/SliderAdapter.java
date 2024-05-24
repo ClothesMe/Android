@@ -52,6 +52,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             if (isSingleTap) {
                 isDoubleTap = true;
                 isSingleTap = false;
+                ((ClothesMeApplication) context).stopAllTTS();
                 // 더블 클릭 시 카메라 액티비티 실행
                 Intent intent = new Intent(context, CameraActivity.class);
                 context.startActivity(intent);

@@ -137,4 +137,10 @@ public class ClothesMeApplication extends AppCompatActivity {
                 "어플 사용 방법을 다시 듣고싶으시다면, 하단의 흰색 버튼을 눌러주세요.";
         textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "replayIntroduction");
     }
+
+    public void stopAllTTS() {
+        if (textToSpeech != null && textToSpeech.isSpeaking()) {
+            textToSpeech.stop();
+        }
+    }
 }

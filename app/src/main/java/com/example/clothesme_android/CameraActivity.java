@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class CameraActivity extends AppCompatActivity {
     private ActivityCameraBinding viewBinding;
     private ImageCapture imageCapture = null;
     private ExecutorService cameraExecutor;
+    private TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,15 @@ public class CameraActivity extends AppCompatActivity {
 
         viewBinding.imageCaptureButton.setOnClickListener(v -> takePhoto());
         cameraExecutor = Executors.newSingleThreadExecutor();
+
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech.setLanguage(Locale.KOREAN); // 언어 설정 (한국어)
+                // 설명을 음성으로 출력
+                String description = "카메라가 실행되었습니다."+"하단의 흰색 버튼을 누르면 촬영됩니다.";
+                textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "camera");
+            }
+        });
     }
 
     private void takePhoto() {
@@ -98,6 +109,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+
         cameraProviderFuture.addListener(() -> {
             ProcessCameraProvider cameraProvider = null;
             try {
@@ -116,7 +128,7 @@ public class CameraActivity extends AppCompatActivity {
             try {
                 cameraProvider.unbindAll();
                 cameraProvider.bindToLifecycle(
-                        this, cameraSelector, preview, imageCapture);
+                        this, cameraSelector, preview, imageCapture);;
             } catch (Exception exc) {
                 Log.e(TAG, "Use case binding failed", exc);
             }

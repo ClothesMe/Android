@@ -3,6 +3,7 @@ package com.example.clothesme_android;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,6 +21,9 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     private final List<SliderItems> sliderItems;
     private final ViewPager2 viewPager2;
     private final Context context;
+    private Handler handler = new Handler();
+    private boolean isSingleTap = false;
+    private boolean isDoubleTap = false;
 
     SliderAdapter(List<SliderItems> sliderItems, ViewPager2 viewPager2, Context context) {
         this.sliderItems = sliderItems;
@@ -40,24 +44,29 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setImage(sliderItems.get(position));
-        if (position == sliderItems.size()- 2){
+        if (position == sliderItems.size() - 2) {
             viewPager2.post(runnable);
         }
-        holder.imageView.setOnClickListener(v -> {
-            // 해당 이미지에 대한 설명을 음성으로 들려주는 메서드 호출
-            ((ClothesMeApplication)context).speakImageDescription(position);
-        });
 
-        GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
+        holder.imageView.setOnClickListener(v -> {
+            if (isSingleTap) {
+                isDoubleTap = true;
+                isSingleTap = false;
                 // 더블 클릭 시 카메라 액티비티 실행
                 Intent intent = new Intent(context, CameraActivity.class);
                 context.startActivity(intent);
-                return super.onDoubleTap(e);
+            } else {
+                isSingleTap = true;
+                handler.postDelayed(() -> {
+                    if (!isDoubleTap) {
+                        // 단일 클릭 시 이미지 설명
+                        ((ClothesMeApplication) context).speakImageDescription(position);
+                    }
+                    isSingleTap = false;
+                    isDoubleTap = false;
+                }, 300);
             }
         });
-        holder.imageView.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
     }
 
     @Override

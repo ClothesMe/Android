@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 
 import java.util.Locale;
 
@@ -17,6 +20,9 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        ImageView gifImageView = findViewById(R.id.gif_image);
+        Glide.with(this).load(R.drawable.loading_splash).into(gifImageView);
 
         textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
             if (status != TextToSpeech.ERROR) {

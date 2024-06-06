@@ -10,11 +10,11 @@ public interface ApiService {
     String BASE_URL = "http://10.0.2.2:8000/";
 
     @Multipart
-    @POST("/socks")
+    @POST("/clothes")
     Call<String> uploadImageForClothesAnalysis(@Part MultipartBody.Part imageFile);
 
     @Multipart
-    @POST("/clothes")
+    @POST("/socks")
     Call<String> uploadImageForSocksDetection(@Part MultipartBody.Part imageFile);
 
     // @Multipart

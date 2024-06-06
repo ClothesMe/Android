@@ -139,6 +139,11 @@ public class CameraActivity extends AppCompatActivity {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), output.getSavedUri());
                             File imageFile = saveBitmapToJpeg(bitmap, getApplicationContext());
                             uploadImageFile(imageFile);
+
+                            // FunctionActivity를 시작하고 이미지 파일 경로를 전달]
+                            Intent intent = new Intent(CameraActivity.this, FunctionActivity.class);
+                            intent.putExtra("IMAGE_PATH", imageFile.getAbsolutePath());
+                            startActivity(intent);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

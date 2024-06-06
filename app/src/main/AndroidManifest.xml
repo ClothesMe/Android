@@ -30,9 +30,11 @@
         <activity
             android:name=".ClothesMeApplication"
             android:exported="true"/>
-
         <activity
             android:name=".CameraActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".FunctionActivity"
             android:exported="true"/>
     </application>
 

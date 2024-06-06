@@ -55,6 +55,18 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
                 ((ClothesMeApplication) context).stopAllTTS();
                 // 더블 클릭 시 카메라 액티비티 실행
                 Intent intent = new Intent(context, CameraActivity.class);
+
+                // 어떤 요청을 할 것인지 인텐트에 추가
+                String requestType;
+                if (position == 0) {
+                    requestType = "clothes";
+                } else if (position == 1) {
+                    requestType = "socks";
+                } else {
+                    requestType = "weather";
+                }
+                intent.putExtra("REQUEST_TYPE", requestType);
+
                 context.startActivity(intent);
             } else {
                 isSingleTap = true;

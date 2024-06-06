@@ -72,7 +72,6 @@ public class ClothesMeApplication extends AppCompatActivity {
 
         viewPager2.setOnClickListener(v -> {
             int position = viewPager2.getCurrentItem();
-            executeFunction(position); // 해당 이미지에 대한 기능을 실행하는 메서드 호출
         });
 
         // 하단 흰색 버튼 클릭 이벤트
@@ -117,8 +116,6 @@ public class ClothesMeApplication extends AppCompatActivity {
         textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "ImageDescription");
     }
 
-    // 해당 이미지에 대한 기능을 실행하는 메서드
-    private void executeFunction(int position) {}
 
     @Override
     protected void onDestroy() {

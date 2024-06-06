@@ -149,7 +149,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void uploadImageFile(File imageFile) {
-        RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
+        RequestBody fileBody = RequestBody.create(imageFile, MediaType.parse("multipart/form-data"));
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", imageFile.getName(), fileBody);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -278,7 +278,7 @@ public class CameraActivity extends AppCompatActivity {
         File storage = context.getCacheDir();
 
         //저장할 파일 이름
-        String fileName = String.valueOf(System.currentTimeMillis()) + ".jpg";
+        String fileName = System.currentTimeMillis() + ".jpg";
 
         //storage 에 파일 인스턴스를 생성합니다.
         File imgFile = new File(storage, fileName);

@@ -69,18 +69,16 @@
 
     <ImageButton
         android:id="@+id/image_function"
-        android:layout_width="350dp"
+        android:layout_width="363dp"
         android:layout_height="460dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/function_image_shape"
         android:contentDescription="@string/app_function"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/white_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <androidx.constraintlayout.widget.Guideline

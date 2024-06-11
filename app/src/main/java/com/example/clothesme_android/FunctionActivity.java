@@ -32,6 +32,7 @@ public class FunctionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_function);
 
         imageButton = findViewById(R.id.image_function);
+        imageButton.setClipToOutline(true);
 
         // CameraActivity에서 전달한 이미지 파일 경로를 받아옵니다.
         Intent receivedIntent  = getIntent();
@@ -40,7 +41,6 @@ public class FunctionActivity extends AppCompatActivity {
 
         // 이미지를 가져와서 설정합니다.
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-
         bitmap = rotateBitmap(bitmap, 90); // 90도 회전
 
         if (bitmap != null) {
@@ -76,8 +76,8 @@ public class FunctionActivity extends AppCompatActivity {
             if (isSingleTap) {
                 isDoubleTap = true;
                 isSingleTap = false;
-                Intent cameraintent = new Intent(FunctionActivity.this, CameraActivity.class); // 이미지 버튼 두 번 클릭 시 카메라 액티비티 실행
-                startActivity(cameraintent);
+                Intent cameraIntent = new Intent(FunctionActivity.this, CameraActivity.class); // 이미지 버튼 두 번 클릭 시 카메라 액티비티 실행
+                startActivity(cameraIntent);
                 finish();
             } else {
                 isSingleTap = true;

@@ -7,4 +7,5 @@
     <string name="app_function">Function</string>
     <string name="app_camera">Camera</string>
     <string name="text_howToUse">사용법 안내</string>
+    <string name="app_home_screen">홈 화면으로 이동</string>
 </resources>

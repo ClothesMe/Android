@@ -29,9 +29,9 @@ public class FunctionActivity extends AppCompatActivity {
         imageButton = findViewById(R.id.image_function);
 
         // CameraActivity에서 전달한 이미지 파일 경로를 받아옵니다.
-        Intent intent = getIntent();
-        String imagePath = intent.getStringExtra("IMAGE_PATH");
-        String responseMessage = intent.getStringExtra("RESPONSE_MESSAGE");
+        Intent receivedIntent  = getIntent();
+        String imagePath = receivedIntent .getStringExtra("IMAGE_PATH");
+        String responseMessage = receivedIntent .getStringExtra("RESPONSE_MESSAGE");
 
         // 이미지를 가져와서 설정합니다.
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
@@ -73,8 +73,13 @@ public class FunctionActivity extends AppCompatActivity {
             // 이미지 버튼 두 번 클릭 시 카메라로 전환
         });
 
-        // 하단 흰색 버튼 클릭 이벤트
+        // 버튼 클릭 이벤트
         findViewById(R.id.image_retelling).setOnClickListener(v -> replayIntroduction());
+        findViewById(R.id.white_btn).setOnClickListener(v -> {
+            Intent intent = new Intent(FunctionActivity.this, ClothesMeApplication.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     // 서버 응답 result 값을 음성으로 안내하는 메서드

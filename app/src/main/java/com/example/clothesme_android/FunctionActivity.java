@@ -20,6 +20,9 @@ public class FunctionActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private TextToSpeech textToSpeech;
     private String responseResult;
+    private boolean isSingleTap = true;
+    private boolean isDoubleTap = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +71,16 @@ public class FunctionActivity extends AppCompatActivity {
 
         // 이미지 버튼 클릭 시 이벤트 처리
         imageButton.setOnClickListener(v -> {
-            // 이미지 버튼 한 번 클릭 시 분석 결과 재안내
-            speakResponseResult();
-            // 이미지 버튼 두 번 클릭 시 카메라로 전환
+            if (isSingleTap) {
+                isDoubleTap = true;
+                isSingleTap = false;
+                speakResponseResult(); // 이미지 버튼 한 번 클릭 시 분석 결과 재안내
+            } else {
+                isSingleTap = true;
+                Intent cameraintent = new Intent(FunctionActivity.this, CameraActivity.class); // 이미지 버튼 두 번 클릭 시 카메라 액티비티 실행
+                startActivity(cameraintent);
+                finish();
+            }
         });
 
         // 버튼 클릭 이벤트

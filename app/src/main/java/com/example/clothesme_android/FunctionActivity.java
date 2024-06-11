@@ -11,11 +11,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Locale;
 
 public class FunctionActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private TextToSpeech textToSpeech;
+    private String responseResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,7 @@ public class FunctionActivity extends AppCompatActivity {
         // CameraActivity에서 전달한 이미지 파일 경로를 받아옵니다.
         Intent intent = getIntent();
         String imagePath = intent.getStringExtra("IMAGE_PATH");
+        String responseMessage = intent.getStringExtra("RESPONSE_MESSAGE");
 
         // 이미지를 가져와서 설정합니다.
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
@@ -40,21 +45,47 @@ public class FunctionActivity extends AppCompatActivity {
             Toast.makeText(this, "이미지를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show();
         }
 
-        // 이미지 버튼 클릭 시 이벤트 처리
-        imageButton.setOnClickListener(v -> {
-            // 이미지 버튼이 클릭되었을 때 실행할 코드
-        });
+        // 서버 응답에서 result 값을 추출
+        if (responseMessage != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(responseMessage);
+                responseResult = jsonObject.getString("result");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                responseResult = "서버 응답을 불러올 수 없습니다.";
+            }
+        } else {
+            responseResult = "서버 응답을 불러올 수 없습니다.";
+        }
 
-        // TTS
+        // 분석 결과 음성 안내
         textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
             if (status != TextToSpeech.ERROR) {
                 textToSpeech.setLanguage(Locale.KOREAN); // 언어 설정 (한국어)
+                speakResponseResult(); // 서버 응답 result 값 음성 출력
             }
+        });
+
+        // 이미지 버튼 클릭 시 이벤트 처리
+        imageButton.setOnClickListener(v -> {
+            // 이미지 버튼 한 번 클릭 시 분석 결과 재안내
+            speakResponseResult();
+            // 이미지 버튼 두 번 클릭 시 카메라로 전환
         });
 
         // 하단 흰색 버튼 클릭 이벤트
         findViewById(R.id.image_retelling).setOnClickListener(v -> replayIntroduction());
     }
+
+    // 서버 응답 result 값을 음성으로 안내하는 메서드
+    private void speakResponseResult() {
+        if (responseResult != null && !responseResult.isEmpty()) {
+            textToSpeech.speak(responseResult, TextToSpeech.QUEUE_FLUSH, null, "responseResult");
+        } else {
+            textToSpeech.speak("서버 응답을 불러올 수 없습니다.", TextToSpeech.QUEUE_FLUSH, null, "responseResult");
+        }
+    }
+
     // 이미지를 회전시키는 메서드
     private Bitmap rotateBitmap(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
@@ -68,5 +99,15 @@ public class FunctionActivity extends AppCompatActivity {
                 "두 번 누르면, 카메라가 실행되어 다시 촬영을 할 수 있습니다." + "하단의 흰색 버튼을 한 번 누르면 홈으로 돌아갑니다." +
                 "사용 방법을 다시 듣고싶으시다면, 우측 상단의 초록색 원형 버튼을 눌러주세요.";
         textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "replayIntroduction");
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TTS 객체가 null이 아니면 종료
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 }

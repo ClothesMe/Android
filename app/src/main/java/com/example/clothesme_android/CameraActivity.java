@@ -117,11 +117,15 @@ public class CameraActivity extends AppCompatActivity {
 
         // 이미지 저장 위치와 메타데이터 지정
         // 이 객체에서 원하는 출력 방법을 지정
-        ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions
-                .Builder(getContentResolver(),
+        ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(
+                getContentResolver(),
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues)
-                .build();
+                contentValues
+        ).build();
+
+        // 이미지 촬영 후 음성으로 안내
+        String captureStartMessage = "촬영된 사진을 분석 중이니 잠시만 기다려주세요.";
+        textToSpeech.speak(captureStartMessage, TextToSpeech.QUEUE_FLUSH, null, "captureStart");
 
         imageCapture.takePicture(
                 outputOptions,
@@ -139,16 +143,10 @@ public class CameraActivity extends AppCompatActivity {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), output.getSavedUri());
                             File imageFile = saveBitmapToJpeg(bitmap, getApplicationContext());
                             uploadImageFile(imageFile);
-
-                            // FunctionActivity를 시작하고 이미지 파일 경로를 전달]
-                            Intent intent = new Intent(CameraActivity.this, FunctionActivity.class);
-                            intent.putExtra("IMAGE_PATH", imageFile.getAbsolutePath());
-                            startActivity(intent);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-
                 }
         );
     }
@@ -199,6 +197,7 @@ public class CameraActivity extends AppCompatActivity {
                         Toast.makeText(CameraActivity.this, "이미지 파일 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
                         Log.e("Img Send Test fail message : ", jsonObject.getString("message"));
                     }
+                    startFunctionActivity(imageFile.getAbsolutePath(), jsonStr);
                 } catch (JSONException e) { // 업로드에 실패했을 경우
                     Toast.makeText(CameraActivity.this, "이미지 파일 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -211,6 +210,13 @@ public class CameraActivity extends AppCompatActivity {
                 Log.e("Img Send Test fail message : ", t.getMessage());
             }
         });
+    }
+
+    private void startFunctionActivity(String imagePath, String responseMessage) {
+        Intent intent = new Intent(CameraActivity.this, FunctionActivity.class);
+        intent.putExtra("IMAGE_PATH", imagePath);
+        intent.putExtra("RESPONSE_MESSAGE", responseMessage);
+        startActivity(intent);
     }
 
     private void startCamera() {

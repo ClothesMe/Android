@@ -64,7 +64,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/white_btn"
         app:layout_constraintEnd_toEndOf="@+id/white_btn"
         app:layout_constraintStart_toStartOf="@+id/white_btn"
-        app:layout_constraintTop_toTopOf="@+id/white_btn" />
+        app:layout_constraintTop_toTopOf="@+id/white_btn"
+        app:srcCompat="@drawable/confirm_btn"/>
 
     <ImageButton
         android:id="@+id/image_function"
@@ -73,6 +74,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/function_image_shape"
         android:contentDescription="@string/app_function"
         app:cardCornerRadius="20dp"

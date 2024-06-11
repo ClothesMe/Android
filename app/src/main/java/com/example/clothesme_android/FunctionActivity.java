@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -20,8 +21,9 @@ public class FunctionActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private TextToSpeech textToSpeech;
     private String responseResult;
-    private boolean isSingleTap = true;
+    private boolean isSingleTap = false;
     private boolean isDoubleTap = false;
+    private Handler handler = new Handler();
 
 
     @Override
@@ -74,12 +76,18 @@ public class FunctionActivity extends AppCompatActivity {
             if (isSingleTap) {
                 isDoubleTap = true;
                 isSingleTap = false;
-                speakResponseResult(); // 이미지 버튼 한 번 클릭 시 분석 결과 재안내
-            } else {
-                isSingleTap = true;
                 Intent cameraintent = new Intent(FunctionActivity.this, CameraActivity.class); // 이미지 버튼 두 번 클릭 시 카메라 액티비티 실행
                 startActivity(cameraintent);
                 finish();
+            } else {
+                isSingleTap = true;
+                handler.postDelayed(() -> {
+                    if (!isDoubleTap) {
+                        speakResponseResult(); // 이미지 버튼 한 번 클릭 시 분석 결과 재안내
+                    }
+                    isSingleTap = false;
+                    isDoubleTap = false;
+                }, 300);
             }
         });
 
@@ -96,6 +104,9 @@ public class FunctionActivity extends AppCompatActivity {
     private void speakResponseResult() {
         if (responseResult != null && !responseResult.isEmpty()) {
             textToSpeech.speak(responseResult, TextToSpeech.QUEUE_FLUSH, null, "responseResult");
+            if (!isSingleTap) {
+                textToSpeech.speak("분석 결과를 다시 듣고 싶으시다면, 화면 중앙의 사진을 한 번 터치해 주시고, 재촬영을 원하시면 두 번 터치 해주세요. 추가적인 사용법 안내를 원하시면, 우측 상단의 원형 버튼을 터치 해주세요.", TextToSpeech.QUEUE_ADD, null, "additionalInstructions");
+            }
         } else {
             textToSpeech.speak("서버 응답을 불러올 수 없습니다.", TextToSpeech.QUEUE_FLUSH, null, "responseResult");
         }

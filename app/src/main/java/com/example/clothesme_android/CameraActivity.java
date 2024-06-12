@@ -157,8 +157,8 @@ public class CameraActivity extends AppCompatActivity {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -207,7 +207,8 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(CameraActivity.this, "서버와 연결에 실패했습니다", Toast.LENGTH_SHORT).show();
-                Log.e("Img Send Test fail message : ", t.getMessage());
+//                Log.e("Img Send Test fail message : ", t.getMessage());
+                Log.e("Img Send Test fail message : ", t.getMessage(), t);
             }
         });
     }

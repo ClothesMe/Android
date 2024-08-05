@@ -36,6 +36,9 @@
         <activity
             android:name=".FunctionActivity"
             android:exported="true"/>
+        <activity
+            android:name=".LoadingActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

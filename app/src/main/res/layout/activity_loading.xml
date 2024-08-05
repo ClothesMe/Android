@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context=".CameraActivity">
+    tools:context=".LoadingActivity">
 
     <ImageView
         android:id="@+id/gif_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="209dp"
+        android:layout_height="221dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="150dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="10dp"
         android:contentDescription="@string/app_intro"
         android:scaleType="centerCrop"
-        android:scaleX="1"
-        android:scaleY="1"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline4"

@@ -39,6 +39,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LoadingActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
+    private static final String TAG = "LoadingActivity";
+    private String requestType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class LoadingActivity extends AppCompatActivity {
         });
 
         Uri photoUri = Uri.parse(getIntent().getStringExtra("photoUri"));
-        String requestType = getIntent().getStringExtra("REQUEST_TYPE");
+        requestType = getIntent().getStringExtra("REQUEST_TYPE");
 
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
@@ -110,11 +112,11 @@ public class LoadingActivity extends AppCompatActivity {
 
                     if (jsonObject.getString("status").equals("success")) { // 업로드에 성공했을 경우
                         Toast.makeText(LoadingActivity.this, "이미지 파일 업로드에 성공했습니다", Toast.LENGTH_SHORT).show();
+                        startFunctionActivity(imageFile.getAbsolutePath(), jsonStr);
                     } else { // 업로드에 실패했을 경우
                         Toast.makeText(LoadingActivity.this, "이미지 파일 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
                         Log.e("Img Send Test fail message : ", jsonObject.getString("message"));
                     }
-                    startFunctionActivity(imageFile.getAbsolutePath(), jsonStr);
                 } catch (JSONException e) { // 업로드에 실패했을 경우
                     Toast.makeText(LoadingActivity.this, "이미지 파일 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -148,7 +150,6 @@ public class LoadingActivity extends AppCompatActivity {
 
     // 비트맵을 파일로 변환하는 메소드
     public File saveBitmapToJpeg(Bitmap bitmap, Context context) {
-
         //내부저장소 캐시 경로를 받아옵니다.
         File storage = context.getCacheDir();
 
@@ -159,7 +160,6 @@ public class LoadingActivity extends AppCompatActivity {
         File imgFile = new File(storage, fileName);
 
         try {
-
             // 자동으로 빈 파일을 생성합니다.
             imgFile.createNewFile();
 

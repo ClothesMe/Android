@@ -113,10 +113,11 @@ public class CameraActivity extends AppCompatActivity {
 
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults output) {
-                        Intent intent = new Intent(CameraActivity.this, LoadingActivity.class);
-                        intent.putExtra("photoUri", output.getSavedUri().toString());
-                        intent.putExtra("REQUEST_TYPE", requestType);
-                        startActivity(intent);
+                        Log.i(TAG, "Photo saved: " + output.getSavedUri().toString());
+                        Intent loadingIntent = new Intent(CameraActivity.this, LoadingActivity.class);
+                        loadingIntent.putExtra("photoUri", output.getSavedUri().toString());
+                        loadingIntent.putExtra("REQUEST_TYPE", requestType);
+                        startActivity(loadingIntent);
                     }
                 }
         );

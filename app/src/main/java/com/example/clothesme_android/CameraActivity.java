@@ -28,13 +28,21 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.dnn.Dnn;
+import org.opencv.dnn.Net;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -64,6 +72,7 @@ public class CameraActivity extends AppCompatActivity {
     private static final String[] REQUIRED_PERMISSIONS = Build.VERSION.SDK_INT <= Build.VERSION_CODES.P ?
             new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE} :
             new String[]{Manifest.permission.CAMERA};
+    private static final int CENTER_THRESHOLD = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +152,7 @@ public class CameraActivity extends AppCompatActivity {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), output.getSavedUri());
                             File imageFile = saveBitmapToJpeg(bitmap, getApplicationContext());
                             uploadImageFile(imageFile);
+                            detectObjects(imageFile);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -169,7 +179,8 @@ public class CameraActivity extends AppCompatActivity {
                 .build();
 
         ApiService api = retrofit.create(ApiService.class);
-        Call<String> call;
+        // Call<String> call;
+        Call<String> call = api.uploadImageForClothesAnalysis(filePart);
 
         // REQUEST_TYPE에 따라 올바른 엔드포인트로 요청
         if ("clothes".equals(requestType)) {
@@ -202,6 +213,8 @@ public class CameraActivity extends AppCompatActivity {
                     Toast.makeText(CameraActivity.this, "이미지 파일 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
+
+                detectObjects(imageFile);
             }
 
             @Override
@@ -211,6 +224,40 @@ public class CameraActivity extends AppCompatActivity {
                 Log.e("Img Send Test fail message : ", t.getMessage(), t);
             }
         });
+    }
+
+    private void detectObjects(File imageFile) {
+        // OpenCV 및 YOLOv4 모델 로드
+        Mat imageMat = Imgcodecs.imread(imageFile.getAbsolutePath());
+        // YOLO 모델 설정
+        Net net = Dnn.readNetFromDarknet("yolo.cfg", "yolo.weights");
+
+        // 이미지 전처리
+        Mat blob = Dnn.blobFromImage(imageMat, 1/255.0, new Size(416, 416), new Scalar(0, 0, 0), true, false);
+        net.setInput(blob);
+
+        // 객체 탐지
+        List<Mat> outputLayers = new ArrayList<>();
+        net.forward(outputLayers, net.getUnconnectedOutLayersNames());
+
+        // 탐지된 객체의 좌표 확인
+        for (Mat output : outputLayers) {
+            for (int i = 0; i < output.rows(); i++) {
+                double confidence = output.get(i, 5)[0];
+                if (confidence > 0.5) { // 신뢰도 기준
+                    // 객체의 좌표 가져오기
+                    int centerX = (int) (output.get(i, 0)[0] * imageMat.cols());
+                    int centerY = (int) (output.get(i, 1)[0] * imageMat.rows());
+
+                    // 중앙값과 비교
+                    if (Math.abs(centerX - (imageMat.cols() / 2)) > CENTER_THRESHOLD ||
+                            Math.abs(centerY - (imageMat.rows() / 2)) > CENTER_THRESHOLD) {
+                        String message = "객체가 중앙에서 벗어났습니다.";
+                        textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, "objectPosition");
+                    }
+                }
+            }
+        }
     }
 
     private void startFunctionActivity(String imagePath, String responseMessage) {

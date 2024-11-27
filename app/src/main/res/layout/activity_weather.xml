@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context=".WeatherRecommendationActivity">
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="78dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/app_weather"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/image_retelling"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:contentDescription="@string/app_weather"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/retelling" />
+
+    <ImageButton
+        android:id="@+id/white_btn"
+        android:layout_width="363dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/app_weather"
+        android:scaleX="1.17"
+        android:scaleY="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:srcCompat="@drawable/confirm_btn" />
+
+    <TextView
+        android:id="@+id/text_toHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/notosanskr_semibold"
+        android:text="@string/app_home_screen"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/white_btn"
+        app:layout_constraintEnd_toEndOf="@+id/white_btn"
+        app:layout_constraintStart_toStartOf="@+id/white_btn"
+        app:layout_constraintTop_toTopOf="@+id/white_btn"
+        app:srcCompat="@drawable/confirm_btn"/>
+
+    <ImageView
+        android:id="@+id/image_location"
+        android:layout_width="78dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:contentDescription="@string/app_weather"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_logo"
+        app:srcCompat="@drawable/location" />
+
+    <TextView
+        android:id="@+id/text_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="흐리고 눈"
+        android:textColor="#FFFFFFFF"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toEndOf="@+id/text_temperature"
+        app:layout_constraintTop_toBottomOf="@+id/image_location" />
+
+    <TextView
+        android:id="@+id/text_max_temp"
+        android:layout_width="97dp"
+        android:layout_height="54dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="최고 "
+        android:textColor="#FFFFFFFF"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_weather"
+        app:layout_constraintEnd_toStartOf="@+id/text_min_temp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_weather"
+        app:layout_constraintTop_toBottomOf="@+id/text_temperature"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/image_weather"
+        android:layout_width="78dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="@string/app_weather"
+        android:scaleX="1.6"
+        android:scaleY="1.6"
+        app:layout_constraintBottom_toTopOf="@+id/white_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_location"
+        app:layout_constraintVertical_bias="0.099"
+        app:srcCompat="@drawable/weather" />
+
+    <TextView
+        android:id="@+id/text_humidity"
+        android:layout_width="91dp"
+        android:layout_height="55dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="습도 "
+        android:textColor="#FFFFFFFF"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_weather"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/text_min_temp"
+        app:layout_constraintTop_toBottomOf="@+id/text_temperature"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/text_min_temp"
+        android:layout_width="97dp"
+        android:layout_height="55dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="최저 "
+        android:textColor="#FFFFFFFF"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_weather"
+        app:layout_constraintEnd_toStartOf="@+id/text_humidity"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/text_max_temp"
+        app:layout_constraintTop_toBottomOf="@+id/text_temperature"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/text_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="0°C "
+        android:textColor="#FFFFFFFF"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_weather"
+        app:layout_constraintTop_toBottomOf="@+id/image_location" />
+
+    <TextView
+        android:id="@+id/text_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="현재 위치 "
+        android:textColor="#d5d5d5"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_location"
+        app:layout_constraintTop_toTopOf="@+id/image_location"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/text_recommendation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="추천 의상 "
+        android:textColor="#d5d5d5"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/white_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_min_temp"
+        app:layout_constraintVertical_bias="0.404" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="55dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="379dp"
+        app:layout_constraintGuide_begin="24dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="80dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="19dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

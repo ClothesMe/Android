@@ -53,14 +53,19 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
                 isDoubleTap = true;
                 isSingleTap = false;
                 ((ClothesMeApplication) context).stopAllTTS();
-                // 더블 클릭 시 카메라 액티비티 실행
-                Intent intent = new Intent(context, CameraActivity.class);
+                if (position == 2) { // 기능 3에 해당하는 포지션 (예: 2번 슬라이드)
+                    Intent intent = new Intent(context, WeatherRecommendationActivity.class);
+                    context.startActivity(intent);
+                } else {
+                    // 더블 클릭 시 카메라 액티비티 실행
+                    Intent intent = new Intent(context, CameraActivity.class);
 
-                // 요청 타입을 슬라이드 아이템에서 가져와 인텐트에 추가
-                String requestType = sliderItems.get(position).getRequestType();
-                intent.putExtra("REQUEST_TYPE", requestType);
+                    // 요청 타입을 슬라이드 아이템에서 가져와 인텐트에 추가
+                    String requestType = sliderItems.get(position).getRequestType();
+                    intent.putExtra("REQUEST_TYPE", requestType);
 
-                context.startActivity(intent);
+                    context.startActivity(intent);
+                }
             } else {
                 isSingleTap = true;
                 handler.postDelayed(() -> {

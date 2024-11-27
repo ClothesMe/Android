@@ -9,4 +9,5 @@
     <string name="text_howToUse">사용법 안내</string>
     <string name="app_home_screen">홈 화면으로 이동</string>
     <string name="app_loading_text">의류를 열심히 분성중이에요 \n 조금만 기다려주세요!</string>
+    <string name="app_weather">Weather</string>
 </resources>

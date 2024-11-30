@@ -125,6 +125,8 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults output) {
                         Log.i(TAG, "Photo saved: " + output.getSavedUri().toString());
+                        detectObjects(new File(output.getSavedUri().getPath()));
+
                         Intent loadingIntent = new Intent(CameraActivity.this, LoadingActivity.class);
                         loadingIntent.putExtra("photoUri", output.getSavedUri().toString());
                         loadingIntent.putExtra("REQUEST_TYPE", requestType);

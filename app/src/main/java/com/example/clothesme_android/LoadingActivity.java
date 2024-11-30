@@ -64,6 +64,7 @@ public class LoadingActivity extends AppCompatActivity {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
             File imageFile = saveBitmapToJpeg(bitmap, getApplicationContext());
+
             uploadImageFile(imageFile, requestType);
         } catch (IOException e) {
             e.printStackTrace();

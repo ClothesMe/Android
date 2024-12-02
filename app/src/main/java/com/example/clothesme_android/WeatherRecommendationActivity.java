@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,11 +24,14 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import android.Manifest;
 
+import java.util.Locale;
+
 public class WeatherRecommendationActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private FusedLocationProviderClient fusedLocationClient;
     private TextView tvLocation, tvWeather, tvTemperature, tvRecommendation, tvHumidity, tvMinTemp, tvMaxTemp;
     private ImageView ivWeatherIcon;
+    private TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +50,20 @@ public class WeatherRecommendationActivity extends AppCompatActivity {
             fetchWeatherAndRecommendation();
         }
 
-        // 홈 화면으로 이동
+        // 홈 화면으로 이동 및 사용법 안내
+        findViewById(R.id.image_retelling).setOnClickListener(v -> replayIntroduction());
         findViewById(R.id.white_btn).setOnClickListener(v -> {
             Intent intent = new Intent(WeatherRecommendationActivity.this, ClothesMeApplication.class);
             startActivity(intent);
             finish();
+        });
+
+        // 음성 안내
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech.setLanguage(Locale.KOREAN); // 언어 설정 (한국어)
+                // speakResponseResult(); // 서버 응답 result 값 음성 출력
+            }
         });
     }
 
@@ -175,5 +188,24 @@ public class WeatherRecommendationActivity extends AppCompatActivity {
                 tvRecommendation.setText(errorMessage);
             }
         });
+    }
+
+    // 설명 다시 듣기 (우측 상단 초록 버튼)
+    private void replayIntroduction() {
+        String description = "클로즈미 어플 사용 방법을 안내해드리겠습니다." +
+                "화면 중앙을 한 번 클릭하면, 날씨 정보와 추천 코디가 음성으로 다시 안내되며, " +
+                "하단의 흰색 버튼을 한 번 누르면 홈으로 돌아갑니다." +
+                "사용 방법을 다시 듣고싶으시다면, 우측 상단의 초록색 원형 버튼을 눌러주세요.";
+        textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, "replayIntroduction");
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TTS 객체가 null이 아니면 종료
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 }

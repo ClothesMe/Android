@@ -1,5 +1,6 @@
 package com.example.clothesme_android;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -44,6 +45,13 @@ public class WeatherRecommendationActivity extends AppCompatActivity {
             // 권한이 이미 허용되었으면 날씨와 추천을 가져옴
             fetchWeatherAndRecommendation();
         }
+
+        // 홈 화면으로 이동
+        findViewById(R.id.white_btn).setOnClickListener(v -> {
+            Intent intent = new Intent(WeatherRecommendationActivity.this, ClothesMeApplication.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void initializeViews() {
@@ -114,11 +122,17 @@ public class WeatherRecommendationActivity extends AppCompatActivity {
         }
     }
     private void updateWeatherUI(WeatherResponse weatherResponse) {
+        // Activity가 파괴되지 않았는지 확인
+        if (isFinishing() || isDestroyed()) {
+            return; // Activity가 종료될 예정이라면 작업을 진행하지 않음
+        }
+
         // 도시 이름
         String location = weatherResponse.getName();
         int weatherId = weatherResponse.getWeather()[0].getId();
+
         // 날씨 설명
-        String weatherDescription = weatherResponse.getWeatherDescription(); // 배열의 첫 번째 요소 사용
+        String weatherDescription = weatherResponse.getWeather()[0].getDescription(); // 배열의 첫 번째 요소 사용
         String iconCode = weatherResponse.getWeather()[0].getIcon();
         String iconUrl = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
 
@@ -136,7 +150,10 @@ public class WeatherRecommendationActivity extends AppCompatActivity {
         tvMaxTemp.setText(maxTemp);
         tvHumidity.setText(humidity);
 
-        Glide.with(this).load(iconUrl).into(ivWeatherIcon);
+        // Glide 요청 전 Activity가 유효한지 확인 후 실행
+        if (!isFinishing() && !isDestroyed()) {
+            Glide.with(this).load(iconUrl).into(ivWeatherIcon);
+        }
 
         // 날씨 정보를 기반으로 의상 추천 받기
         fetchRecommendation(weatherResponse);

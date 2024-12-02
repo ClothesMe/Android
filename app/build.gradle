@@ -19,7 +19,8 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "OPENWEATHER_API_KEY", "\"${properties.getProperty("OPENWEATHER_API_KEY")}\""
+        buildConfigField "String", "OPENWEATHER_API_KEY", properties['OPENWEATHER_API_KEY']
+        buildConfigField "String", "OPENAI_API_KEY", properties['OPENAI_API_KEY']
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

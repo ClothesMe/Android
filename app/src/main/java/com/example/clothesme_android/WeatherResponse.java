@@ -55,8 +55,22 @@ public class WeatherResponse {
 
     // Weather 내부 클래스 (날씨 상태)
     public static class Weather {
-        @SerializedName("description") // 날씨 설명 (예: 흐리고 비/눈)
+        @SerializedName("id") // 날씨 상태 ID (예: 800은 맑음)
+        private int id;
+
+        @SerializedName("icon") // 날씨 아이콘 코드
+        private String icon;
+
+        @SerializedName("description") // 날씨 설명 (예: 흐림)
         private String description;
+
+        public int getId() {
+            return id;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
 
         public String getDescription() {
             return description;

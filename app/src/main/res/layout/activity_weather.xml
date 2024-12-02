@@ -72,7 +72,7 @@
         android:layout_width="78dp"
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/app_weather"
         android:scaleX="0.8"
         android:scaleY="0.8"
@@ -84,7 +84,7 @@
         android:id="@+id/text_weather"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/notosanskr_bold"
         android:text="흐리고 눈"
         android:textColor="#FFFFFFFF"
@@ -98,30 +98,32 @@
         android:id="@+id/text_max_temp"
         android:layout_width="97dp"
         android:layout_height="54dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="@font/notosanskr_regular"
         android:text="최고 "
         android:textColor="#FFFFFFFF"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_weather"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_weather_icon"
         app:layout_constraintEnd_toStartOf="@+id/text_min_temp"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/image_weather"
+        app:layout_constraintStart_toEndOf="@+id/image_weather_icon"
         app:layout_constraintTop_toBottomOf="@+id/text_temperature"
         app:layout_constraintVertical_bias="0.0" />
 
+    <!--        app:srcCompat="@drawable/weather" />-->
+
     <ImageView
-        android:id="@+id/image_weather"
+        android:id="@+id/image_weather_icon"
         android:layout_width="78dp"
         android:layout_height="75dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="24dp"
         android:contentDescription="@string/app_weather"
-        android:scaleX="1.6"
-        android:scaleY="1.6"
+        android:scaleX="1"
+        android:scaleY="1"
         app:layout_constraintBottom_toTopOf="@+id/white_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_location"
-        app:layout_constraintVertical_bias="0.099"
-        app:srcCompat="@drawable/weather" />
+        app:layout_constraintVertical_bias="0.059" />
 
     <TextView
         android:id="@+id/text_humidity"
@@ -130,8 +132,8 @@
         android:fontFamily="@font/notosanskr_regular"
         android:text="습도 "
         android:textColor="#FFFFFFFF"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_weather"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_weather_icon"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/text_min_temp"
@@ -145,8 +147,8 @@
         android:fontFamily="@font/notosanskr_regular"
         android:text="최저 "
         android:textColor="#FFFFFFFF"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_weather"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_weather_icon"
         app:layout_constraintEnd_toStartOf="@+id/text_humidity"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/text_max_temp"
@@ -157,14 +159,15 @@
         android:id="@+id/text_temperature"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/notosanskr_bold"
         android:text="0°C "
         android:textColor="#FFFFFFFF"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/image_weather"
+        app:layout_constraintStart_toEndOf="@+id/image_weather_icon"
         app:layout_constraintTop_toBottomOf="@+id/image_location" />
 
     <TextView
@@ -195,7 +198,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_min_temp"
-        app:layout_constraintVertical_bias="0.404" />
+        app:layout_constraintVertical_bias="0.277" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

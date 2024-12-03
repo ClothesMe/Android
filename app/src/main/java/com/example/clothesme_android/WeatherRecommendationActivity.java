@@ -95,8 +95,8 @@ public class WeatherRecommendationActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationRequest locationRequest = LocationRequest.create()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                    .setInterval(10000) // 10초 간격
-                    .setFastestInterval(5000);
+                    .setInterval(3000000) // 5분 간격
+                    .setFastestInterval(60000);
 
             LocationCallback locationCallback = new LocationCallback() {
                 @Override

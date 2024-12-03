@@ -12,11 +12,27 @@ public class ChatGPTResponse {
     }
 
     public static class Choice {
-        @SerializedName("text")
-        private String text;
+        @SerializedName("message")
+        private Message message;
 
-        public String getText() {
-            return text;
+        public Message getMessage() {
+            return message;
+        }
+    }
+
+    public static class Message {
+        @SerializedName("role")
+        private String role;
+
+        @SerializedName("content")
+        private String content;
+
+        public String getRole() {
+            return role;
+        }
+
+        public String getContent() {
+            return content;
         }
     }
 }

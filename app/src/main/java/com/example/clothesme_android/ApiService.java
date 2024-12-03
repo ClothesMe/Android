@@ -32,16 +32,6 @@ public interface ApiService {
             @Query("lang") String lang
     );
 
-    @GET("geo/1.0/reverse")
-    Call<List<GeoResponse>> getReverseGeo(
-            @Query("lat") double lat,
-            @Query("lon") double lon,
-            @Query("limit") int limit,
-            @Query("lang") String lang,
-            @Query("appid") String apiKey
-    );
-
-    @Headers("Authorization: Bearer YOUR_CHATGPT_API_KEY")
-    @POST("/v1/completions")
-    Call<ChatGPTResponse> getWeatherRecommendation(@Body ChatGPTRequest request);
+    @POST("chat/completions")
+    Call<ChatGPTResponse> getRecommendation(@Body ChatGPTRequest request);
 }

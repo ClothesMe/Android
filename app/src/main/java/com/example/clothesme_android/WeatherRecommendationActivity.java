@@ -179,7 +179,12 @@ public class WeatherRecommendationActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String recommendation) {
                 // 성공적으로 응답을 받으면 의상 추천 결과를 화면에 표시
+
                 tvRecommendation.setText(recommendation);
+                // 추천 결과를 음성으로 출력
+                if (textToSpeech != null) {
+                    textToSpeech.speak(recommendation, TextToSpeech.QUEUE_FLUSH, null, "recommendationSpeech");
+                }
             }
 
             @Override
